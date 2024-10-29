@@ -48,10 +48,14 @@ func (this *Handler) handle(args []string) error {
 		return fmt.Errorf("%w: %s", errInvalidArg, err)
 	}
 	_, err = fmt.Fprint(this.output, this.calculator.Calculate(a, b))
-	return err
+	if err != nil {
+		return fmt.Errorf("%w: %w", errOutputProblem, err)
+	}
+	return nil
 }
 
 var (
 	errWrongArgCount = errors.New("wrong number of arguments")
 	errInvalidArg    = errors.New("invalid argument")
+	errOutputProblem = errors.New("output problem")
 )
